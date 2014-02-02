@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b42effab-a67c-42c2-937f-c510791da552" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java" afterPath="$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/algorithms/unionfind/UnionFind.java" afterPath="$PROJECT_DIR$/src/com/algorithms/unionfind/UnionFind.java" />
-    </list>
+    <list default="true" id="b42effab-a67c-42c2-937f-c510791da552" name="Default" comment="" />
     <ignored path="UnionFind.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="b42effab-a67c-42c2-937f-c510791da552" time="1391362086167" ignored="false" />
@@ -84,7 +81,7 @@
       <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.074875206">
+            <state line="17" column="34" selection-start="485" selection-end="485" vertical-scroll-proportion="0.42429283">
               <folding />
             </state>
           </provider>
@@ -383,7 +380,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18303095" sideWeight="0.6705757" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32942432" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -465,7 +462,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.074875206">
+        <state line="17" column="34" selection-start="485" selection-end="485" vertical-scroll-proportion="0.42429283">
           <folding />
         </state>
       </provider>
