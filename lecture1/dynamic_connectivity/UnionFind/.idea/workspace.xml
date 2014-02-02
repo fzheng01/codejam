@@ -2,30 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b42effab-a67c-42c2-937f-c510791da552" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../sandbox/src/com/feng/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UnionFind.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/algorithms/unionfind/UnionFind.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../sandbox/src/com/feng/algorithms/UnionFind.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../sandbox/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../sandbox/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../.gitignore" afterPath="$PROJECT_DIR$/../../../.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../sandbox/sandbox.iml" afterPath="$PROJECT_DIR$/../sandbox/sandbox.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java" afterPath="$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/algorithms/unionfind/UnionFind.java" afterPath="$PROJECT_DIR$/src/com/algorithms/unionfind/UnionFind.java" />
     </list>
     <ignored path="UnionFind.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="b42effab-a67c-42c2-937f-c510791da552" time="1391362086167" ignored="false" />
     <file path="$PROJECT_DIR$/../sandbox/.idea/workspace.xml" changelist="b42effab-a67c-42c2-937f-c510791da552" time="1391363402441" ignored="false" />
-    <file path="/Main.java" changelist="b42effab-a67c-42c2-937f-c510791da552" time="1391364233948" ignored="false" />
+    <file path="/Main.java" changelist="b42effab-a67c-42c2-937f-c510791da552" time="1391364807103" ignored="false" />
     <file path="/UnionFind.java" changelist="b42effab-a67c-42c2-937f-c510791da552" time="1391364349235" ignored="false" />
     <file path="/fragment.java" changelist="b42effab-a67c-42c2-937f-c510791da552" time="1391363451726" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -91,7 +75,7 @@
       <file leaf-file-name="UnionFind.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/algorithms/unionfind/UnionFind.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="9" selection-start="693" selection-end="693" vertical-scroll-proportion="0.0">
+            <state line="3" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -100,7 +84,7 @@
       <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="1" selection-start="862" selection-end="862" vertical-scroll-proportion="0.7237937">
+            <state line="3" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.074875206">
               <folding />
             </state>
           </provider>
@@ -474,14 +458,14 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/algorithms/unionfind/UnionFind.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="9" selection-start="693" selection-end="693" vertical-scroll-proportion="0.0">
+        <state line="3" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/algorithms/unionfind/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="1" selection-start="862" selection-end="862" vertical-scroll-proportion="0.7237937">
+        <state line="3" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.074875206">
           <folding />
         </state>
       </provider>

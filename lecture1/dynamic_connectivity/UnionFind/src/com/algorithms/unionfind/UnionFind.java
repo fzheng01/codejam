@@ -1,8 +1,6 @@
 package com.algorithms.unionfind;
 
 /**
- * Created with IntelliJ IDEA.
- * User: summitzf
  * Date: 2/2/14
  * Time: 12:29 PM
  * UnionFind Class
