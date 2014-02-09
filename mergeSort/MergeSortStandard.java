@@ -1,10 +1,14 @@
-import java.util.Random;
+import java.util.Arrays;
 
-public class Inversion {
-    private int[] array;
+public class MergeSortStandard {
+    protected int[] array;
     
-    public Inversion(int[] a) {
+    public MergeSortStandard(int[] a) {
         array = a;
+    }
+    
+    public String toString() {
+        return Arrays.toString(array);
     }
     
     public void mergeSort(int start, int end) {
@@ -46,36 +50,6 @@ public class Inversion {
         i = lStart;
         while (t <= end-lStart) {
             array[i++] = tmpArray[t++];
-        }
-    }
-    
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-        for (int val: array) {
-            str.append(val);
-            str.append(" ");
-        }
-        return str.toString();
-    }
-    
-    public static void main(String []args) {
-        if (args.length == 0) {
-            System.out.println("missing array size integer");
-        } else {
-            int N = Integer.parseInt(args[0]);
-            int[] x = new int[N];
-            int i = 0;
-            Random generator = new Random();
-            while (i < N) {
-                x[i++] = generator.nextInt(N);
-            }
-            Inversion inv = new Inversion(x);
-            long startTime = System.currentTimeMillis();
-            inv.mergeSort(0, N-1);
-            long endTime = System.currentTimeMillis();
-            long totalTime = endTime - startTime;
-//            System.out.println(inv.toString());
-            System.out.println("Running time = " + totalTime + " millisec");
         }
     }
 }
