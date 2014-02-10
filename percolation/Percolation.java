@@ -3,7 +3,13 @@
  * @date 2014-02-05
  */
 public class Percolation {
+   /**
+    * using 2 weighted quick union
+    * weightedUF with top and bottom virtual sites
+    * weightedUFTop with only top virtual sites
+    */
    private WeightedQuickUnionUF weightedUF;
+   private WeightedQuickUnionUF weightedUFTop;
    private int sizeOfGrid;
    private int tailIndex;
    private boolean[] openGrid;
@@ -14,6 +20,7 @@ public class Percolation {
        sizeOfGrid = N;
        tailIndex = N*N + 1;
        weightedUF = new WeightedQuickUnionUF(tailIndex + 1);
+       weightedUFTop = new WeightedQuickUnionUF(tailIndex);
        openGrid = new boolean[tailIndex + 1];
        openGrid[0] = true;
        openGrid[tailIndex] = true;
@@ -49,22 +56,27 @@ public class Percolation {
            // check left
            if (j > 1 && isOpen(i, j-1)) {
                weightedUF.union(queryIndex, queryIndex-1);
+               weightedUFTop.union(queryIndex, queryIndex-1);
            }
            // check right
            if (j < sizeOfGrid && isOpen(i, j+1)) {
                weightedUF.union(queryIndex, queryIndex+1);
+               weightedUFTop.union(queryIndex, queryIndex+1);
            }
            // check up
            if (i > 1 && isOpen(i-1, j)) {
                weightedUF.union(queryIndex, queryIndex-sizeOfGrid);
+               weightedUFTop.union(queryIndex, queryIndex-sizeOfGrid);
            }
            // check down
            if (i < sizeOfGrid && isOpen(i+1, j)) {
                weightedUF.union(queryIndex, queryIndex+sizeOfGrid);
+               weightedUFTop.union(queryIndex, queryIndex+sizeOfGrid);
            }
            // top border
            if (i == 1) {
                weightedUF.union(queryIndex, 0);
+               weightedUFTop.union(queryIndex, 0);
            }
            // bottom border
            if (i == sizeOfGrid) {
@@ -86,7 +98,7 @@ public class Percolation {
     */
    public boolean isFull(int i, int j) {
        verifyInput(i, j);
-       return isOpen(i, j) && weightedUF.connected(xyTo1D(i, j), 0);
+       return isOpen(i, j) && weightedUFTop.connected(xyTo1D(i, j), 0);
    }
    
    /**
