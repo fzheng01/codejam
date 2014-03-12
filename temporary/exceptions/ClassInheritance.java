@@ -24,7 +24,11 @@ public class ClassInheritance {
         Programming b = new Programming();
         Job c = new Programming();
         Work d = new Programming();
+        
         ((Programming) c).doTwo();
+        ((Work) c).logHours(5);
+        
+        ((Programming) d).doTwo();
         d.logHours(3);
     }
 }
