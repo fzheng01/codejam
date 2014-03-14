@@ -49,7 +49,8 @@ public class ClassInheritance {
         System.out.println(c.getStoryPoint());
         
         // redefine (static method)
-        System.out.println(Programming.getWorkHours());
-        System.out.println(Job.getWorkHours());
+        System.out.println(a.getWorkHours());
+        System.out.println(b.getWorkHours());
+        System.out.println(c.getWorkHours());
     }
 }
