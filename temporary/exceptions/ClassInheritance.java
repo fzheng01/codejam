@@ -6,6 +6,12 @@ class Job {
     void doOne() {
         System.out.println("One");
     }
+    int getStoryPoint() {
+        return 1;
+    }
+    static int getWorkHours() {
+        return 11;
+    }
 }
 
 class Programming extends Job implements Work{
@@ -16,6 +22,12 @@ class Programming extends Job implements Work{
     void doTwo() {
         System.out.println("Two");
     }
+    int getStoryPoint() {
+        return 2;
+    }
+    static int getWorkHours() {
+        return 12;
+    }
 }
 
 public class ClassInheritance {
@@ -25,10 +37,19 @@ public class ClassInheritance {
         Job c = new Programming();
         Work d = new Programming();
         
+        // inheritance and casting
         ((Programming) c).doTwo();
         ((Work) c).logHours(5);
-        
         ((Programming) d).doTwo();
         d.logHours(3);
+        
+        // polymorphism
+        System.out.println(a.getStoryPoint());
+        System.out.println(b.getStoryPoint());
+        System.out.println(c.getStoryPoint());
+        
+        // redefine (static method)
+        System.out.println(Programming.getWorkHours());
+        System.out.println(Job.getWorkHours());
     }
 }
