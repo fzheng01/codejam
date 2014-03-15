@@ -3,6 +3,11 @@ interface Work {
 }
 
 class Job {
+    protected float rate = 10.1f;
+    private boolean isManager;
+    boolean isManager() {
+        return isManager;
+    }
     void doOne() {
         System.out.println("One");
     }
@@ -52,5 +57,9 @@ public class ClassInheritance {
         System.out.println(a.getWorkHours());
         System.out.println(b.getWorkHours());
         System.out.println(c.getWorkHours());
+        
+        System.out.println(a.isManager()); // instance variable default value
+        boolean isLocalManager = true;  // local variable must be initialized
+        System.out.println(isLocalManager);
     }
 }

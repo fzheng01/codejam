@@ -8,10 +8,10 @@ public class Board {
     // where blocks[i][j] = block in row i, column j.
     public Board(int[][] blocks) {
         dim = blocks.length;
-        blocks = new byte[dim][dim];
+        this.blocks = new byte[dim][dim];
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
-                blocks[i][j] = (byte) blocks[i][j];
+                this.blocks[i][j] = (byte) blocks[i][j];
             }
         }
     }
@@ -37,7 +37,7 @@ public class Board {
     
     private int getManhattanNumber(byte key, byte goalKey) {
         if (key == goalKey) return 0;
-        return Math.abs(key/dim-goalKey/dim) + Math.abs(key%dim-goalKey%dim);
+        return Math.abs(key/dim - goalKey/dim) + Math.abs(key % dim - goalKey % dim);
     }
     
     // sum of Manhattan distances between blocks and goal.
