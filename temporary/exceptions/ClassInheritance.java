@@ -8,6 +8,9 @@ class Job {
     boolean isManager() {
         return isManager;
     }
+    void setRate(float newRate) {
+        this.rate = newRate;
+    }
     void doOne() {
         System.out.println("One");
     }
@@ -42,24 +45,36 @@ public class ClassInheritance {
         Job c = new Programming();
         Work d = new Programming();
         
-        // inheritance and casting
+        System.out.println("Testing: inheritance and casting");
         ((Programming) c).doTwo();
         ((Work) c).logHours(5);
         ((Programming) d).doTwo();
         d.logHours(3);
+        System.out.println();
         
-        // polymorphism
+        System.out.println("Testing: polymorphism");
         System.out.println(a.getStoryPoint());
         System.out.println(b.getStoryPoint());
         System.out.println(c.getStoryPoint());
-        
-        // redefine (static method)
+        System.out.println();
+
+        System.out.println("Testing: redefine (static methods)");
         System.out.println(a.getWorkHours());
         System.out.println(b.getWorkHours());
         System.out.println(c.getWorkHours());
+        System.out.println();
         
+        System.out.println("Testing: instance variable and local variable when not initialized");
         System.out.println(a.isManager()); // instance variable default value
         boolean isLocalManager = true;  // local variable must be initialized
         System.out.println(isLocalManager);
+        System.out.println();
+        
+        System.out.println("Testing: final modifier prevent reassigning, but not changing state");
+        final Job e = new Job();
+        System.out.println(e.rate);
+        e.setRate(10.2f);
+        System.out.println(e.rate);
+        System.out.println();
     }
 }
