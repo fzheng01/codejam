@@ -1,19 +1,26 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Board {
     private final byte[][] blocks;
     private final int dim;
+    private final int[] blankXY;
     
     // construct a board from an N by N array of blocks.
     // where blocks[i][j] = block in row i, column j.
     public Board(int[][] blocks) {
         dim = blocks.length;
         this.blocks = new byte[dim][dim];
+        int x = 0, y = 0;
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
                 this.blocks[i][j] = (byte) blocks[i][j];
+                if (blocks[i][j] == 0) {
+                    x = i;
+                    y = j;
+                }
             }
         }
+        blankXY = new int[]{x, y};
     }
     
     // board dimension N.
@@ -35,6 +42,7 @@ public class Board {
         return hnum;
     }
     
+    // private function to assist getting manhattan number
     private int getManhattanNumber(byte key, byte goalKey) {
         if (key == goalKey) return 0;
         return Math.abs(key/dim - goalKey/dim) + Math.abs(key % dim - goalKey % dim);
@@ -51,6 +59,7 @@ public class Board {
                 mnum += getManhattanNumber(blocks[i][j], goalKey);
             }
         }
+        return mnum;
     }
     
     // is this board the goal board?
@@ -60,24 +69,80 @@ public class Board {
     
     // a board obtained by exchanging two adjacent blocks in the same row.
     public Board twin() {
-        // TODO
+        int[][] twinBlocks = new int[dim][dim];
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                twinBlocks[i][j] = blocks[i][j];
+            }
+        }
+        if (dim > 1) {
+            int row = dim-1;
+            if (blankXY[0] == dim-1) row = dim-2;
+            int temp = twinBlocks[row][dim-1];
+            twinBlocks[row][dim-1] = twinBlocks[row][dim-2];
+            twinBlocks[row][dim-2] = temp;
+        }
+        return new Board(twinBlocks);
     }
     
     // does this board equal y?
     public boolean equals(Object y) {
+        if (y instanceof Board) {
+            Board z = (Board) y;
+            if (dim != z.dimension()) return false;
+            if (this.hamming() == z.hamming() && this.manhattan() == z.manhattan()) {
+                return true;
+            }
+        }
+        return false;
     }
     
     // all neighboring boards.
     public Iterable<Board> neighbors() {
+        ArrayList<Board> nbBlocksArray = new ArrayList<Board>();
+        int[][] midBlocks = new int[dim][dim];
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                midBlocks[i][j] = blocks[i][j];
+            }
+        }
+        int x = blankXY[0], y = blankXY[1];
+        if (x > 0) {
+            midBlocks[x][y] = midBlocks[x-1][y];
+            midBlocks[x-1][y] = 0;
+            nbBlocksArray.add(new Board(midBlocks));
+            midBlocks[x-1][y] = midBlocks[x][y];
+            midBlocks[x][y] = 0;
+        }
+        if (x < dim-1) {
+            midBlocks[x][y] = midBlocks[x+1][y];
+            midBlocks[x+1][y] = 0;
+            nbBlocksArray.add(new Board(midBlocks));
+            midBlocks[x+1][y] = midBlocks[x][y];
+            midBlocks[x][y] = 0;
+        }
+        if (y > 0) {
+            midBlocks[x][y] = midBlocks[x][y-1];
+            midBlocks[x][y-1] = 0;
+            nbBlocksArray.add(new Board(midBlocks));
+            midBlocks[x][y-1] = midBlocks[x][y];
+            midBlocks[x][y] = 0;
+        }
+        if (y < dim-1) {
+            midBlocks[x][y] = midBlocks[x][y+1];
+            midBlocks[x][y+1] = 0;
+            nbBlocksArray.add(new Board(midBlocks));
+        }
+        return nbBlocksArray;
     }
     
     // string representation of the board.
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append(N + "\n");
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tiles[i][j]));
+        s.append(dim + "\n");
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                s.append(String.format("%2d ", blocks[i][j]));
             }
             s.append("\n");
         }
