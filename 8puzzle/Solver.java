@@ -1,4 +1,6 @@
 public class Solver {
+    private int nStep;
+    
     // find a solution to the initial board.
     // using A* algorithm.
     public Solver(Board initial) {
@@ -11,6 +13,7 @@ public class Solver {
     // min number of moves to solve initial board.
     // -1 if no solution
     public int moves() {
+        return nStep;
     }
     
     // sequence of boards in a shortest solution.

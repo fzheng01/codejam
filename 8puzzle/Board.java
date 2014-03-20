@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Board {
     private final byte[][] blocks;
     private final int dim;
@@ -87,19 +85,20 @@ public class Board {
     
     // does this board equal y?
     public boolean equals(Object y) {
-        if (y instanceof Board) {
-            Board z = (Board) y;
-            if (dim != z.dimension()) return false;
-            if (this.hamming() == z.hamming() && this.manhattan() == z.manhattan()) {
-                return true;
-            }
-        }
-        return false;
+        if (y == this) return true;
+        if (y == null) return false;
+        if (y.getClass() != this.getClass()) return false;
+        Board that = (Board) y;
+        if (that.dim != this.dim) return false;
+        for (int i = 0; i < dim; i++)
+            for (int j = 0; j < dim; j++)
+                if (that.blocks[i][j] != this.blocks[i][j]) return false;
+        return true;
     }
     
     // all neighboring boards.
     public Iterable<Board> neighbors() {
-        ArrayList<Board> nbBlocksArray = new ArrayList<Board>();
+        Queue<Board> nbQueue = new Queue<Board>();
         int[][] midBlocks = new int[dim][dim];
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
@@ -110,30 +109,30 @@ public class Board {
         if (x > 0) {
             midBlocks[x][y] = midBlocks[x-1][y];
             midBlocks[x-1][y] = 0;
-            nbBlocksArray.add(new Board(midBlocks));
+            nbQueue.enqueue(new Board(midBlocks));
             midBlocks[x-1][y] = midBlocks[x][y];
             midBlocks[x][y] = 0;
         }
         if (x < dim-1) {
             midBlocks[x][y] = midBlocks[x+1][y];
             midBlocks[x+1][y] = 0;
-            nbBlocksArray.add(new Board(midBlocks));
+            nbQueue.enqueue(new Board(midBlocks));
             midBlocks[x+1][y] = midBlocks[x][y];
             midBlocks[x][y] = 0;
         }
         if (y > 0) {
             midBlocks[x][y] = midBlocks[x][y-1];
             midBlocks[x][y-1] = 0;
-            nbBlocksArray.add(new Board(midBlocks));
+            nbQueue.enqueue(new Board(midBlocks));
             midBlocks[x][y-1] = midBlocks[x][y];
             midBlocks[x][y] = 0;
         }
         if (y < dim-1) {
             midBlocks[x][y] = midBlocks[x][y+1];
             midBlocks[x][y+1] = 0;
-            nbBlocksArray.add(new Board(midBlocks));
+            nbQueue.enqueue(new Board(midBlocks));
         }
-        return nbBlocksArray;
+        return nbQueue;
     }
     
     // string representation of the board.
