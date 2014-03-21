@@ -46,7 +46,7 @@ public class Solver {
         else {
             Iterable<Board> iterate = min.board.neighbors();
             for (Board b : iterate) {
-                if (b != null && (min.last == null || b != min.last.board)) {
+                if (b != null && (min.last == null || !b.equals(min.last.board))) {
                     pg.insert(new BoardElement(b, min));
                 }
             }
