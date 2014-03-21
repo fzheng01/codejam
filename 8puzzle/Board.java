@@ -42,7 +42,7 @@ public class Board {
     
     // private function to assist getting manhattan number
     private int getManhattanNumber(byte key, byte goalKey) {
-        if (key == goalKey) return 0;
+        if (key-- == goalKey--) return 0;
         return Math.abs(key/dim - goalKey/dim) + Math.abs(key % dim - goalKey % dim);
     }
     
