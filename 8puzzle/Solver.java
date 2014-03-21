@@ -1,17 +1,18 @@
 public class Solver {
-    private BoardElement answer;
+    private BoardElement result;
     
     // inner class BoardElement
-    private class BoardElement implements Comparable<Board> {
+    private class BoardElement implements Comparable<BoardElement> {
         private final Board board;
         private final int move;
         private final BoardElement last;
         private final int priority;
+        private boolean isSolution;
         BoardElement(Board currentBoard, BoardElement lastElement) {
             board = currentBoard;
             last = lastElement;
             if (lastElement == null) move = 0;
-            else move = ++lastElement.move;
+            else move = lastElement.move + 1;
             priority = currentBoard.manhattan() + move;
         }
         public int compareTo(BoardElement that) {
@@ -22,22 +23,60 @@ public class Solver {
     // find a solution to the initial board.
     // using A* algorithm.
     public Solver(Board initial) {
-        
+        MinPQ<BoardElement> pqSelf = new MinPQ<BoardElement>();
+        MinPQ<BoardElement> pqTwin = new MinPQ<BoardElement>();
+        pqSelf.insert(new BoardElement(initial, null));
+        pqTwin.insert(new BoardElement(initial.twin(), null));
+        BoardElement mid;
+        do {
+            mid = processPQ(pqSelf);
+            BoardElement tmp = processPQ(pqTwin);
+            if (tmp.isSolution) {
+                break;
+            }
+        } while(!mid.isSolution);
+        if (mid.isSolution) {
+            this.result = mid;
+        }
+    }
+    
+    private BoardElement processPQ(MinPQ<BoardElement> pg) {
+        BoardElement min = pg.delMin();
+        if (min.board.isGoal()) min.isSolution = true;
+        else {
+            Iterable<Board> iterate = min.board.neighbors();
+            for (Board b : iterate) {
+                if (b != null && (min.last == null || b != min.last.board)) {
+                    pg.insert(new BoardElement(b, min));
+                }
+            }
+        }
+        return min;
     }
     
     // is the initial board solvable?
     public boolean isSolvable() {
+        return result != null;
     }
     
     // min number of moves to solve initial board.
     // -1 if no solution
     public int moves() {
-
+        if (isSolvable()) return result.move;
+        else return -1;
     }
     
     // sequence of boards in a shortest solution.
     // null if no solution.
     public Iterable<Board> solution() {
+        if (!isSolvable()) return null;
+        Stack<Board> boardStack = new Stack<Board>();
+        BoardElement current = this.result;
+        while (current != null) {
+            boardStack.push(current.board);
+            current = current.last;
+        }
+        return boardStack;
     }
     
     // solve a slider puzzle
