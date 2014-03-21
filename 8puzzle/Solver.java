@@ -1,9 +1,28 @@
 public class Solver {
-    private int nStep;
+    private BoardElement answer;
+    
+    // inner class BoardElement
+    private class BoardElement implements Comparable<Board> {
+        private final Board board;
+        private final int move;
+        private final BoardElement last;
+        private final int priority;
+        BoardElement(Board currentBoard, BoardElement lastElement) {
+            board = currentBoard;
+            last = lastElement;
+            if (lastElement == null) move = 0;
+            else move = ++lastElement.move;
+            priority = currentBoard.manhattan() + move;
+        }
+        public int compareTo(BoardElement that) {
+            return priority - that.priority;
+        }
+    }
     
     // find a solution to the initial board.
     // using A* algorithm.
     public Solver(Board initial) {
+        
     }
     
     // is the initial board solvable?
@@ -13,7 +32,7 @@ public class Solver {
     // min number of moves to solve initial board.
     // -1 if no solution
     public int moves() {
-        return nStep;
+
     }
     
     // sequence of boards in a shortest solution.
