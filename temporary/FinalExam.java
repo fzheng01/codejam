@@ -48,7 +48,12 @@ class TestClass {
 			}
 		}
 		System.out.println("The counter is " + counter);
-
+		char c[] = new char[]{97, '\t', 'e', '\n', 'i', '\t', 'o'};
+		for(char c1 : c) {
+			System.out.print(c1);
+		}
+		System.out.println();
+		System.out.println(c.length);
 		System.out.println("World");
 	}
 }
