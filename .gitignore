@@ -5,6 +5,7 @@
 checkstyle-5.5/
 findbugs-2.0.1/
 bin
+tests
 
 # Package Files #
 *.jar
