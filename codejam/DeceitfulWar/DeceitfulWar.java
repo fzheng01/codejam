@@ -1,13 +1,12 @@
 import java.util.*;
 import java.io.*;
 
-// having issue on score of war
 public class DeceitfulWar {
-    private float[] naomi;
-    private float[] ken;
+    private final float[] naomi;
+    private final float[] ken;
     private final int dim;
-    private int scoreOfDeceitfulWar;
-    private int scoreOfWar;
+    private final int scoreOfDeceitfulWar;
+    private final int scoreOfWar;
     public DeceitfulWar(float[] a, float[] b) {
         int i, j;
         dim = a.length;
@@ -19,22 +18,29 @@ public class DeceitfulWar {
         }
         Arrays.sort(naomi);
         Arrays.sort(ken);
-        int tooSmallNaomiBlocks = getFirstLargerId(ken[0], naomi, 0, dim-1);
-        int tooLargeKenBlocks = dim - getFirstLargerId(naomi[dim-1], ken, 0, dim-1);
-        scoreOfDeceitfulWar = dim - Math.max(tooSmallNaomiBlocks, tooLargeKenBlocks);
-        i = 0;
-        j = 0;
-        scoreOfWar = dim;
+        scoreOfDeceitfulWar = getScore(ken, naomi);
+        scoreOfWar = dim - getScore(naomi, ken);
+    }
+    
+    /**
+     * Deceitful war is actually a mirror of war
+     */
+    private int getScore(float[] foe, float[] amigo) {
+        int i = 0, j = 0, score = 0;
         while (i < dim && j < dim) {
-            int id = getFirstLargerId(naomi[i], ken, j, dim-1);
+            int id = getFirstElementLargerThanKey(foe[i], amigo, j, dim-1);
             if (id >= dim) break;
             j = id + 1;
             i++;
-            scoreOfWar--;
+            score++;
         }
+        return score;
     }
     
-    private int getFirstLargerId(float key, float[] array, int a, int b) {
+    /**
+     * binary search to find the first larger element than the key
+     */
+    private int getFirstElementLargerThanKey(float key, float[] array, int a, int b) {
         int n = array.length, lo = a, hi = b;
         int mid = 0;
         while (lo <= hi) {
