@@ -40,6 +40,7 @@ public class DeceitfulWar {
     /**
      * binary search to find the first larger element than the key
      * sorted array start index 'start'; end index 'end' (inclusive)
+     * if key is larger than all elements in the array, return array size
      */
     private int getFirstElementLargerThanKey(float key, float[] array, int start, int end) {
         int n = array.length, mid = 0, lo = start, hi = end;
