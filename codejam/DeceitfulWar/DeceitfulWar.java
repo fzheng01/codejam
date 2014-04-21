@@ -61,10 +61,11 @@ public class DeceitfulWar {
     }
     
     public static void main(String[] args) throws Exception {
-        if (args.length != 2)
-            throw new IllegalArgumentException("Require input and output filenames");
+        if (args.length == 0)
+            throw new IllegalArgumentException("Require input file name");
         Scanner sc = new Scanner(new FileReader(args[0]));
-        PrintWriter pw = new PrintWriter(new FileWriter(args[1]));
+        String outFilename = args[0].replaceFirst("[.][^.]+$", "").concat(".out");
+        PrintWriter pw = new PrintWriter(new FileWriter(outFilename));
         int caseCnt = sc.nextInt();
         for (int caseNum = 0; caseNum < caseCnt; caseNum++) {
             pw.print("Case #" + (caseNum + 1) + ": ");
