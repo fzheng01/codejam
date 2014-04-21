@@ -23,7 +23,7 @@ import java.io.*;
  * 
  */
 public class MinesweeperMaster {
-    private final byte[][] board;
+    private final boolean[][] board;
     private boolean solvable;
     private final int row;
     private final int col;
@@ -32,8 +32,8 @@ public class MinesweeperMaster {
         row = r;
         col = c;
         safe = row*col - m;
-        board = new byte[row][col];
-        board[0][0] = 1;
+        board = new boolean[row][col];
+        board[0][0] = true;
         int counter = safe;
         if (safe == 1) solvable = true;
         else if (row == 1 || col == 1) {
@@ -41,7 +41,7 @@ public class MinesweeperMaster {
             LOOP1:
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
-                    board[i][j] = 1;
+                    board[i][j] = true;
                     if (--counter <= 0) break LOOP1;
                 }
             }
@@ -58,19 +58,19 @@ public class MinesweeperMaster {
                         int i, j;
                         for (i = 0; i <= 1; i++) {
                             for (j = 0; j <= cmax; j++) {
-                                board[i][j] = 1;
+                                board[i][j] = true;
                             }
                         }
                         for (i = 0; i <= rmax; i++) {
                             for (j = 0; j <= 1; j++) {
-                                board[i][j] = 1;
+                                board[i][j] = true;
                             }
                         }
                         LOOP2:
                         for (i = 2; i <= rmax; i++) {
                             for (j = 2; j <= cmax; j++) {
                                 if (counter-- <= 0) break LOOP2;
-                                board[i][j] = 1;
+                                board[i][j] = true;
                             }
                         }
                         break LOOP3;
@@ -86,7 +86,7 @@ public class MinesweeperMaster {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (i == 0 && j == 0) str.append("c");
-                else if (board[i][j] > 0) str.append(".");
+                else if (board[i][j]) str.append(".");
                 else str.append("*");
             }
             if (i < row-1) str.append("\n");
@@ -98,7 +98,8 @@ public class MinesweeperMaster {
         if (args.length == 0)
             throw new IllegalArgumentException("Require input file name");
         Scanner sc = new Scanner(new FileReader(args[0]));
-        PrintWriter pw = new PrintWriter(new FileWriter(args[0].replaceFirst("[.][^.]+$", "").concat(".out")));
+        String outFilename = args[0].replaceFirst("[.][^.]+$", "").concat(".out");
+        PrintWriter pw = new PrintWriter(new FileWriter(outFilename));
         int caseCnt = sc.nextInt();
         int dim = 4;
         for (int caseNum = 0; caseNum < caseCnt; caseNum++) {
