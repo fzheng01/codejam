@@ -1,4 +1,4 @@
-*.class
+*class
 .DS_Store
 .project
 .idea
@@ -10,6 +10,11 @@ tests
 *.out
 *.txt
 *.zip
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.gif
 
 # Package Files #
 *.jar
