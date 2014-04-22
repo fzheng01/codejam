@@ -8,6 +8,8 @@ bin
 tests
 *.in
 *.out
+*.txt
+*.zip
 
 # Package Files #
 *.jar

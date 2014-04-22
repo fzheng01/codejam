@@ -1,3 +1,6 @@
+/**
+ * score: 100
+ */
 public class KdTree {
     private Node root;
     private int size;
@@ -22,20 +25,18 @@ public class KdTree {
         public RectHV getRect() {
             return this.rect;
         }
-        public boolean isLBNext(Point2D that) {
+        public boolean isPointAtlb(Point2D that) {
             int compareResult;
             if (isRed) compareResult = compareTo1D(p.x(), that.x());
             else compareResult = compareTo1D(p.y(), that.y());
             return compareResult > 0;
         }
-        public Node getSubtree(boolean isLB) {
-            if (isLB) return lb;
+        public Node getSubtree(boolean islb) {
+            if (islb) return lb;
             else return rt;
         }
         public Node getSubtree(Point2D that) {
-            boolean isLB = isLBNext(that);
-            if (isLB) return lb;
-            else return rt;
+            return getSubtree(isPointAtlb(that));
         }
         private int compareTo1D(double x, double y) {
             if (x < y) return -1;
@@ -71,11 +72,11 @@ public class KdTree {
         }
         Node current = root;
         Node pre = current;
-        boolean isLBNext = false;
+        boolean isNextSidelb = false;
         while (current != null) {
-            isLBNext = current.isLBNext(p);
+            isNextSidelb = current.isPointAtlb(p);
             pre = current;
-            current = current.getSubtree(isLBNext);
+            current = current.getSubtree(isNextSidelb);
         }
         RectHV preRect = pre.getRect();
         double xmin = preRect.xmin();
@@ -84,15 +85,15 @@ public class KdTree {
         double ymax = preRect.ymax();
         boolean isRed = pre.isRed();
         if (isRed) {
-            if (isLBNext) xmax = pre.p().x();
+            if (isNextSidelb) xmax = pre.p().x();
             else xmin = pre.p().x();
         } else {
-            if (isLBNext) ymax = pre.p().y();
+            if (isNextSidelb) ymax = pre.p().y();
             else ymin = pre.p().y();
         }
         RectHV curRect = new RectHV(xmin, ymin, xmax, ymax);
         newNode = new Node(p, curRect, !isRed);
-        if (isLBNext) pre.lb = newNode;
+        if (isNextSidelb) pre.lb = newNode;
         else pre.rt = newNode;
     }
     
@@ -171,24 +172,26 @@ public class KdTree {
             next = node;
             bestDist = dist;
         }
-        Node lb = node.getSubtree(true);
-        if (lb != null && lb.getRect().distanceSquaredTo(p) <= bestDist) {
-            Node fromLb = findNearest(p, lb, next, bestDist);
-            if (fromLb != null) {
-                dist = fromLb.p().distanceSquaredTo(p);
+        // pick the subtree on the same side first
+        boolean nextSide = node.isPointAtlb(p);
+        Node n1 = node.getSubtree(nextSide);
+        if (n1 != null && n1.getRect().distanceSquaredTo(p) <= bestDist) {
+            Node n1Best = findNearest(p, n1, next, bestDist);
+            if (n1Best != null) {
+                dist = n1Best.p().distanceSquaredTo(p);
                 if (dist < bestDist) {
-                    next = fromLb;
+                    next = n1Best;
                     bestDist = dist;
                 }
             }
         }
-        Node rt = node.getSubtree(false);
-        if (rt != null && rt.getRect().distanceSquaredTo(p) <= bestDist) {
-            Node fromRt = findNearest(p, rt, next, bestDist);
-            if (fromRt != null) {
-                dist = fromRt.p().distanceSquaredTo(p);
+        Node n2 = node.getSubtree(!nextSide);
+        if (n2 != null && n2.getRect().distanceSquaredTo(p) <= bestDist) {
+            Node n2Best = findNearest(p, n2, next, bestDist);
+            if (n2Best != null) {
+                dist = n2Best.p().distanceSquaredTo(p);
                 if (dist < bestDist) {
-                    next = fromRt;
+                    next = n2Best;
                 }
             }
         }
