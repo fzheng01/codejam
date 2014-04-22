@@ -1,85 +1,66 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.FileNotFoundException;
+import java.util.*;
+import java.io.*;
 
 public class ReverseWords {
-    private char[] sentence;
-    private int sentenceLength;
+    private final int len;
+    private final String result;
     
-    ReverseWords(String input) {
-        sentenceLength = input.length();
-        sentence = input.toCharArray();
-    }
-    
-    private void doReverse(int start, int end) {
-        if (start < 0 || end >= sentenceLength || start > end)
-            throw new IllegalArgumentException("Unaccepted start or end index");
-        int i = start, j = end;
-        while (i < j) {
-            char temp = sentence[i];
-            sentence[i++] = sentence[j];
-            sentence[j--] = temp;
-        }
-    }
-    
-    public String doReverse() {
-        if (sentenceLength == 0) return "";
-        try {
+    ReverseWords(String input) throws Exception {
+        len = input.length();
+        char[] sentence = input.toCharArray();
+        if (len == 0) result = "";
+        else {
             // first reverse the whole sentence
-            doReverse(0, sentenceLength - 1);
-            
+            doReverse(sentence, 0, len - 1);
+
             // then reverse every single word
-            int head = 0;
-            int tail = 0;
-            
+            int head = 0, tail = 0;
             outer:
-            while (head <= tail && tail < sentenceLength) {
+            while (head <= tail && tail < len) {
                 while (sentence[head] == ' ') {
                     tail = ++head;
                     continue outer;
                 }
-                if (++tail == sentenceLength || sentence[tail] == ' ') {
-                    doReverse(head, tail - 1);
+                if (++tail == len || sentence[tail] == ' ') {
+                    doReverse(sentence, head, tail - 1);
                     head = ++tail;
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            result = new String(sentence);
         }
-        return new String(sentence);
     }
     
-    public static void main(String[] args) throws IOException {
-        if (args.length != 2)
-            throw new IllegalArgumentException("Two arguments required");
-        
-        BufferedReader bufferedReader = null;
-        BufferedWriter bufferedWriter = null;
-        try {
-            bufferedReader = new BufferedReader(new FileReader(args[0]));
-            bufferedWriter = new BufferedWriter(new FileWriter(args[1]));
-            String s = "";
-            while ((s = bufferedReader.readLine()) != null) {
-                ReverseWords rw = new ReverseWords(s);
-                String rs = rw.doReverse();
-                bufferedWriter.write(rs);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedReader != null)
-                bufferedReader.close();
-            if (bufferedWriter != null)
-                bufferedWriter.close();
+    // private method to do the reverse
+    // start and end index (inclusive)
+    private void doReverse(char[] array, int start, int end) {
+        if (start < 0 || end >= len || start > end)
+            throw new IllegalArgumentException("Invalid start/end index");
+        int i = start, j = end;
+        while (i < j) {
+            char temp = array[i];
+            array[i++] = array[j];
+            array[j--] = temp;
         }
+    }
+
+    public String toString() {
+        return result;
+    }
+    
+    public static void main(String[] args) throws Exception {
+        if (args.length == 0)
+            throw new IllegalArgumentException("Require input file name");
+        Scanner sc = new Scanner(new FileReader(args[0]));
+        String outFilename = args[0].replaceFirst("[.][^.]+$", "").concat(".out");
+        PrintWriter pw = new PrintWriter(new FileWriter(outFilename));
+        int caseCnt = Integer.parseInt(sc.nextLine());
+        for (int caseNum = 0; caseNum < caseCnt; caseNum++) {
+            pw.print("Case #" + (caseNum + 1) + ": ");
+            ReverseWords rw = new ReverseWords(sc.nextLine());
+            pw.println(rw);
+        }
+        pw.flush();
+        pw.close();
+        sc.close();
     }
 }
