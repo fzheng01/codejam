@@ -3,10 +3,10 @@ import java.util.*;
 
 /**
  * The long data type is a 64-bit two's complement integer.
- * The signed long has a minimum value of -263 and a maximum value of 263-1.
+ * The signed long has a minimum value of -2^63 and a maximum value of 2^63-1.
  * In Java SE 8 and later, you can use the long data type to represent an unsigned 64-bit long,
- * which has a minimum value of 0 and a maximum value of 264-1.
- * The unsigned long has a minimum value of 0 and maximum value of 264-1.
+ * which has a minimum value of 0 and a maximum value of 2^64-1.
+ * The unsigned long has a minimum value of 0 and maximum value of 2^64-1.
  * Use this data type when you need a range of values wider than those provided by int.
  */
 public class Bullseye {
