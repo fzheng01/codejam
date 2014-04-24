@@ -1,7 +1,67 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * The long data type is a 64-bit two's complement integer.
+ * The signed long has a minimum value of -263 and a maximum value of 263-1.
+ * In Java SE 8 and later, you can use the long data type to represent an unsigned 64-bit long,
+ * which has a minimum value of 0 and a maximum value of 264-1.
+ * The unsigned long has a minimum value of 0 and maximum value of 264-1.
+ * Use this data type when you need a range of values wider than those provided by int.
+ */
 public class Bullseye {
+    private final long r;
+    private final long t;
+    private final long result;
+    
+    Bullseye(long radius, long total) throws Exception {
+        r = radius;
+        t = total;
+        /**
+         * because n must satisfy
+         * 2*n*n + (2*r-1)*n <= t
+         * so 2*n*n < t --> n < sqrt(t)/2
+         */
+        result = binarySearch(1, (long) Math.sqrt(t/2.0));
+    }
+    
+    /**
+     * if f(n) <= t && f(n+1) > t, n is the answer
+     * if f(n) > t, n is too large, return +1
+     * if f(n+1) < t, n is too small, return -1
+     */
+    private int compareTo(long n) {
+        /**
+         * ret1 = t - (2*n*n + (2*r-1)*n)
+         */
+        long ret1 = t + n - 2*n*n; // n < sqrt(t/2), so n*n is safe
+        if (ret1 < 0) return +1;
+        if (ret1/n < 2*r) return +1; // r*n may exceed long type range
+        ret1 -= 2*r*n;
+        /**
+         * ret2 = t - (2*(n+1)*(n+1) + (2*r-1)*(n+1))
+         * ret2 = ret1 - (4*n+2*r+1)
+         */
+        long ret2 = ret1 - 1 - 4*n;
+        if (ret2 < 0) return 0;
+        ret2 -= 2*r;
+        if (ret2 < 0) return 0;
+        
+        return -1;
+    }
+    
+    private long binarySearch(long lo, long hi) throws Exception {
+        if (lo > hi) throw new Exception("Invalid binary search boundary");
+        long mid = (lo + hi)/2;
+        if (compareTo(mid) < 0) return binarySearch(mid+1, hi);
+        else if (compareTo(mid) > 0) return binarySearch(lo, mid-1);
+        else return mid;
+    }
+    
+    public String toString() {
+        return Long.toString(result);
+    }
+    
     public static void main(String[] args) throws Exception {
         if (args.length == 0)
             throw new IllegalArgumentException("Require input file name");
@@ -11,18 +71,10 @@ public class Bullseye {
         int caseCnt = sc.nextInt();
         for (int caseNum = 0; caseNum < caseCnt; caseNum++) {
             pw.print("Case #" + (caseNum + 1) + ": ");
-            // double r = sc.nextDouble();
-            // double t = sc.nextDouble();
-            // double result = 0.5*(Math.sqrt((r-0.5)*(r-0.5) + 2.0*t)-(r-0.5));
-            // long n = (long) Math.floor(result);
-            // if (t < 2.0*n*n+(2.0*r-1)*n) n--;
             long r = sc.nextLong();
             long t = sc.nextLong();
-            long n = 0;
-            do {
-                t -= 4*(++n)+2*r-3;
-            } while (t > 0);
-            pw.println(--n);
+            Bullseye bull = new Bullseye(r, t);
+            pw.println(bull);
         }
         pw.flush();
         pw.close();
