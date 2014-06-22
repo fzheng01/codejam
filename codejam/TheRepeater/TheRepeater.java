@@ -2,6 +2,39 @@ import java.util.*;
 import java.io.*;
 
 public class TheRepeater {
+    private StringBuilder compress = new StringBuilder();
+    private ArrayList<Integer> dArray = new ArrayList<Integer>();
+    
+    TheRepeater(String word) {
+        int wordLen = word.length();
+        int duplicateCount = 0;
+        compress.append(word.charAt(0));
+        for (int i = 1; i < wordLen; i++) {
+            char cur = word.charAt(i);
+            if (cur == word.charAt(i-1)) {
+                duplicateCount++;
+            } else {
+                compress.append(cur);
+                dArray.add(duplicateCount);
+                duplicateCount = 0;
+            }
+        }
+        dArray.add(duplicateCount);
+    }
+    
+    public String getCompress() {
+        return compress.toString();
+    }
+    
+    public int[] getDist() {
+        int len = dArray.size();
+        int[] ret = new int[len];
+        for (int i = 0; i < len; i++) {
+            ret[i] = (Integer) dArray.get(i);
+        }
+        return ret;
+    }
+
     public static void main(String[] args) throws Exception {
         if (args.length == 0)
             throw new IllegalArgumentException("Require input file name");
@@ -13,50 +46,46 @@ public class TheRepeater {
             pw.print("Case #" + (caseNum + 1) + ": ");
             int strCnt = Integer.parseInt(sc.nextLine());
             boolean solvable = true;
-            ArrayList<Character> ch = new ArrayList<Character>();
-            ArrayList[] arr = new ArrayList[strCnt];
-          OUTER:
-            for (int num_i = 0; num_i < strCnt; num_i++) {
-              String str = sc.nextLine();
-              if (!solvable) continue;
-              arr[num_i] = new ArrayList();
-              char cur = str.charAt(0);
-              int cur_count = 1;
-              int ref_index = 0;
-              for (int i = 1; i < str.length(); i++) {
-                char now = str.charAt(i);
-                if (cur != now) {
-                  if (num_i == 0) ch.add(cur);
-                  else if (ch.get(ref_index++) != cur) {
-                    solvable = false;
-                    continue OUTER;
-                  }
-                  cur = now;
-                  arr[num_i].add(cur_count);
-                  cur_count = 1;
-                } else cur_count++;
-              }
-              if (num_i == 0) ch.add(cur);
-              else if (ref_index != ch.size()-1 || ch.get(ref_index) != cur) {
-                  solvable = false;
-                  continue OUTER;
-              }
-              arr[num_i].add(cur_count);
+            String share = null;
+            int[][] dists = new int[strCnt][];
+            for (int strIdx = 0; strIdx < strCnt; strIdx++) {
+                String str = sc.nextLine();
+                if (str.isEmpty()) solvable = false;
+                if (!solvable) continue;
+                TheRepeater tp = new TheRepeater(str);
+                if (strIdx == 0) share = tp.getCompress();
+                else solvable = share.equals(tp.getCompress());
+                dists[strIdx] = tp.getDist();
             }
             if (!solvable) pw.println("Fegla Won");
             else {
-              int counter = 0;
-              for (int i = 0; i < ch.size(); i++) {
-                int mid = 0;
-                for (int j = 0; j < strCnt; j++) {
-                  mid = mid + (Integer)(arr[j].get(i));
+                int shareLen = share.length();
+                int sum = 0;
+                for (int k = 0; k < shareLen; k++) {
+                    // for each character, count the minimal sum of absolute values (diff)
+                    // for example, input are abb and aaab
+                    // unique/fingerprint string is ab
+                    // dist arrays are [0, 1] and [2, 0] respectively
+                    // to make them the same, for character a, median is 0, minimal step is 2
+                    // for character b, median is 0, minimal step is 1
+                    // so the total is 3
+                    int[] dist = new int[strCnt];
+                    for (int i = 0; i < strCnt; i++) {
+                        dist[i] = dists[i][k];
+                    }
+                    // strCnt is not large (<=100), so just sort it by nlog(n)
+                    Arrays.sort(dist);
+                    // minimum sum of absolute values -> median
+                    int median = (strCnt%2 == 0) ? dist[strCnt/2] : dist[(strCnt-1)/2];
+                    for (int i = 0; i < strCnt; i++) {
+                        if (dist[i] > median) {
+                            sum += dist[i] - median;
+                        } else {
+                            sum += median - dist[i];
+                        }
+                    }
                 }
-                mid = mid/strCnt;
-                for (int j = 0; j < strCnt; j++) {
-                  counter = counter + Math.abs((Integer)(arr[j].get(i)) - mid);
-                }
-              }
-              pw.println(counter);
+                pw.println(sum);
             }
         }
         pw.flush();
