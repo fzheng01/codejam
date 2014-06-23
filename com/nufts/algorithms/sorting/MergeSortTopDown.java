@@ -1,6 +1,6 @@
 package com.nufts.algorithms.sorting;
 
-public class MergeSortTopDown {
+public class MergeSortTopDown extends SortAlgorithm {
     private static Comparable[] aux;
     
     public static void sort(Comparable[] a) {
@@ -14,10 +14,6 @@ public class MergeSortTopDown {
         sort(a, lo, mid);
         sort(a, mid+1, hi);
         merge(a, lo, mid, hi);
-    }
-    
-    private static boolean less(Comparable v, Comparable w) {
-        return v.compareTo(w) < 0;
     }
     
     private static void merge(Comparable[] a, int lo, int mid, int hi) {
