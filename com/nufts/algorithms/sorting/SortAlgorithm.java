@@ -2,7 +2,7 @@ package com.nufts.algorithms.sorting;
 
 public abstract class SortAlgorithm {
     
-    public static void sort(Comparable[] a) {}
+    public static void sort(Comparable[] a) { }
     
     protected static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
