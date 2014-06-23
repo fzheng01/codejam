@@ -2,6 +2,7 @@ import java.util.Random;
 import java.util.Arrays;
 import com.nufts.algorithms.sorting.SelectionSort;
 import com.nufts.algorithms.sorting.MergeSortTopDown;
+import com.nufts.algorithms.sorting.QuickSort;
 
 public class TestConsole {
     private static int N;
@@ -19,12 +20,13 @@ public class TestConsole {
     
     private static void run() {
         Comparable[] x = randIntArray();
+        long startTime, totalTime;
         print(x);
-        long startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         SelectionSort.sort(x);
-        long totalTime = System.currentTimeMillis() - startTime;
+        totalTime = System.currentTimeMillis() - startTime;
         print(x);
-        System.out.println("Selection Sort: " + totalTime + " millisec");
+        System.out.println("Selectionsort: " + totalTime + " millisec");
         
         x = randIntArray();
         print(x);
@@ -32,7 +34,15 @@ public class TestConsole {
         MergeSortTopDown.sort(x);
         totalTime = System.currentTimeMillis() - startTime;
         print(x);
-        System.out.println("Merge Sort Top Down: " + totalTime + " millisec");
+        System.out.println("Mergesort Top Down: " + totalTime + " millisec");
+        
+        x = randIntArray();
+        print(x);
+        startTime = System.currentTimeMillis();
+        QuickSort.sort(x);
+        totalTime = System.currentTimeMillis() - startTime;
+        print(x);
+        System.out.println("Quicksort: " + totalTime + " millisec");
     }
     
     private static void print(Comparable[] x) {
