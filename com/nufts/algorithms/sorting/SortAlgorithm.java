@@ -1,5 +1,7 @@
 package com.nufts.algorithms.sorting;
 
+import java.util.*;
+
 public abstract class SortAlgorithm {
     
     public static void sort(Comparable[] a) { }
@@ -19,6 +21,23 @@ public abstract class SortAlgorithm {
             System.out.print(a[i] + " ");
         }
         System.out.println();
+    }
+    
+    protected static void shuffle(Comparable[] a) {
+        Random rnd = new Random();
+        for (int i = a.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i+1);
+            exch(a, index, i);
+        }
+    }
+    
+    protected static void shuffle(Comparable[] a, int lo, int hi) {
+        if (lo == hi) return;
+        Random rnd = new Random();
+        for (int i = hi; i > lo; i--) {
+            int index = rnd.nextInt(i-lo+1) + lo;
+            exch(a, index, i);
+        }
     }
     
     public static boolean isSorted(Comparable[] a) {

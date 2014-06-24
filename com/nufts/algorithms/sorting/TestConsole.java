@@ -3,6 +3,7 @@ import java.util.Arrays;
 import com.nufts.algorithms.sorting.SelectionSort;
 import com.nufts.algorithms.sorting.MergeSortTopDown;
 import com.nufts.algorithms.sorting.QuickSort;
+import com.nufts.algorithms.sorting.RSelection;
 
 public class TestConsole {
     private static int N;
@@ -43,10 +44,24 @@ public class TestConsole {
         totalTime = System.currentTimeMillis() - startTime;
         print(x);
         System.out.println("Quicksort: " + totalTime + " millisec");
+        
+        x = randIntArray();
+        print(x);
+        startTime = System.currentTimeMillis();
+        Comparable element = RSelection.getRank(x, x.length/2 + 1);
+        totalTime = System.currentTimeMillis() - startTime;
+        print(element);
+        QuickSort.sort(x);
+        print(x);
+        System.out.println("Quick Selection: " + totalTime + " millisec");
     }
     
     private static void print(Comparable[] x) {
         if (showArray) System.out.println(Arrays.toString(x));
+    }
+    
+    private static void print(Comparable x) {
+        System.out.println(x);
     }
     
     private static Integer[] randIntArray() {
