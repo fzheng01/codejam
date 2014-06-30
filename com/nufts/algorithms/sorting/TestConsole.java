@@ -64,8 +64,8 @@ public class TestConsole {
         System.out.println(x);
     }
     
-    private static Integer[] randIntArray() {
-        Integer[] x = new Integer[N];
+    private static Comparable[] randIntArray() {
+        Comparable[] x = new Integer[N];
         int i = 0;
         Random generator = new Random();
         while (i < N) {

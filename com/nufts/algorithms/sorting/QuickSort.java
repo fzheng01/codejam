@@ -16,11 +16,11 @@ public class QuickSort extends SortAlgorithm {
     private static int partition(Comparable[] a, int lo, int hi) {
         Comparable v = a[lo];
         int i = lo, j = hi+1;
-        while(true) {
-            while(less(a[++i], v)) {
+        while (true) {
+            while (less(a[++i], v)) {
                 if (i == hi) break;
             }
-            while(less(v, a[--j])) {
+            while (less(v, a[--j])) {
                 if (j == lo) break;
             }
             if (i >= j) break;

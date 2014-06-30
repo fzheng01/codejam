@@ -9,7 +9,7 @@ public class RSelection extends SortAlgorithm {
             throw new IllegalArgumentException("Rank must between 1 and N");
         int rankIdx = rank - 1;
         int lo = 0, hi = N-1;
-        while(true) {
+        while (true) {
             shuffle(a, lo, hi);
             int partIdx = partition(a, lo, hi);
             if (partIdx == rankIdx) {
@@ -26,11 +26,11 @@ public class RSelection extends SortAlgorithm {
         if (lo == hi) return lo;
         Comparable v = a[lo];
         int i = lo, j = hi+1;
-        while(true) {
-            while(less(a[++i], v)) {
+        while (true) {
+            while (less(a[++i], v)) {
                 if (i == hi) break;
             }
-            while(less(v, a[--j])) {
+            while (less(v, a[--j])) {
                 if (j == lo) break;
             }
             if (i >= j) break;
