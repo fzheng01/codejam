@@ -34,6 +34,12 @@ public class BST {
         }
     }
     public static void main(String[] args) {
+        /**
+         *        8
+         *    3      10
+         *  1   6       14
+         *    4   7  13
+         */
         int[] arr = {8, 3, 10, 6, 1, 4, 7, 14, 13};
         BST bst = new BST();
         for (int x : arr) {
