@@ -44,14 +44,14 @@ public class BST {
     }
     private Node put(Node node, int value) {
         if (node == null) return new Node(value, 1); 
-        if (value <= node.val) node.left = put(node.left, value);
+        if (value < node.val) node.left = put(node.left, value);
         else node.right = put(node.right, value);
         node.N = size(node.left) + size(node.right) + 1;
         return node;
     }
     
     /**
-     * get Node (value)
+     * get Node first occurrence (value)
      */
     public Node get(int value) {
         return get(root, value);
@@ -72,7 +72,7 @@ public class BST {
     }
     
     /**
-     * traverse BST horizontally and return as array
+     * level traverse BST and return as array
      */
     public int[] traverse() {
         if (root == null) return new int[0];
@@ -163,6 +163,26 @@ public class BST {
     }
     
     /**
+     * count duplicate element in BST
+     */
+    public int countDuplicate() {
+        Node last = null;
+        return countDuplicate(root, last, 0);
+    }
+    private int countDuplicate(Node node, Node last, int counter) {
+        if (node != null) {
+            int c = countDuplicate(node.left, last, counter);
+            if (last != null && last.val == node.val) {
+                System.out.println("found one: " + node.val);
+                c++;
+            }
+            c = countDuplicate(node.right, node, c);
+            return c;
+        }
+        return counter;
+    }
+    
+    /**
      * support function, convert Integer List to int array
      */
     public static int[] listToArray(List<Integer> integers) {
@@ -174,7 +194,7 @@ public class BST {
     }
     
     @Test
-    public void testBSTBase() {
+    public void testBSTUnique() {
         /**
          *        8
          *    3      10
@@ -184,9 +204,8 @@ public class BST {
          */
         int[] arr = {8, 3, 10, 6, 1, 4, 7, 14, 13, 11};
         BST bst = new BST();
-        for (int x : arr) {
-            bst.put(x);
-        }
+        for (int x : arr) bst.put(x);
+        
         // test get
         Node n = bst.get(4);
         org.junit.Assert.assertNotNull("node 4 should not be null", n);
@@ -209,24 +228,20 @@ public class BST {
         // test sort
         int[] actualArray = bst.sort();
         int[] expectArray = new int[]{1, 3, 4, 6, 7, 8, 10, 11, 13, 14};
-        org.junit.Assert.assertTrue("bst.sort result is not sorted",
-                                    Arrays.equals(actualArray, expectArray));
+        org.junit.Assert.assertArrayEquals("bst sort result is not sorted", expectArray, actualArray);
         
         // test traverse
         actualArray = bst.traverse();
         expectArray = new int[]{8, 3, 10, 1, 6, 14, 4, 7, 13, 11};
-        org.junit.Assert.assertTrue("bst.sort result is not sorted",
-                                    Arrays.equals(actualArray, expectArray));
+        org.junit.Assert.assertArrayEquals("bst level traverse result is wrong", expectArray, actualArray);
         
         // test depth
         actualArray = bst.getDepth(3);
         expectArray = new int[]{8, 10};
-        org.junit.Assert.assertTrue("bst.getDepth depth 3 is not 8 and 10",
-                                    Arrays.equals(actualArray, expectArray));
+        org.junit.Assert.assertArrayEquals("bst.getDepth depth 3 is not 8 and 10", expectArray, actualArray);
         actualArray = bst.getDepth(0);
         expectArray = new int[]{1, 4, 7, 11};
-        org.junit.Assert.assertTrue("bst.getDepth leaves are incorrect",
-                                    Arrays.equals(actualArray, expectArray));
+        org.junit.Assert.assertArrayEquals("bst.getDepth leaves are incorrect", expectArray, actualArray);
         
         // test LCA
         org.junit.Assert.assertEquals("LCA of 4 and 7 is 6", 6, bst.getLCA(4, 7));
@@ -241,6 +256,36 @@ public class BST {
         }
         org.junit.Assert.assertEquals("LCA of 13 and 7 is 8", 8, bst.getLCA(13, 7));
         org.junit.Assert.assertEquals("LCA of 13 and 10 is 10", 10, bst.getLCA(13, 10));
+        
+        // test count duplicate
+        org.junit.Assert.assertEquals("count duplicate is not correct", 0, bst.countDuplicate());
+    }
+    
+    @Test
+    public void testBSTDuplicate() {
+        /**
+         *        5
+         *    3      10
+         *  2   4   8   10
+         *     3   5 8 
+         *            8
+         */
+        int[] arr = {5, 10, 3, 4, 8, 10, 2, 8, 3, 5, 8};
+        BST bst = new BST();
+        for (int x : arr) bst.put(x);
+        
+        // test sort
+        int[] actualArray = bst.sort();
+        int[] expectArray = new int[]{2, 3, 3, 4, 5, 5, 8, 8, 8, 10, 10};
+        org.junit.Assert.assertArrayEquals("bst sort result is not sorted", expectArray, actualArray);
+        
+        // test traverse
+        actualArray = bst.traverse();
+        expectArray = new int[]{5, 3, 10, 2, 4, 8, 10, 3, 5, 8, 8};
+        org.junit.Assert.assertArrayEquals("bst level traverse result is wrong", expectArray, actualArray);
+        
+        // test count duplicate
+        org.junit.Assert.assertEquals("count duplicate is not correct", 5, bst.countDuplicate());
     }
     
     public static void main(String[] args) {
