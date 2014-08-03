@@ -165,14 +165,13 @@ public class BST {
      * count duplicate element in BST
      */
     public int countDuplicate() {
-        Node last = null;
-        return countDuplicate(root, last, 0);
+        return countDuplicate(root, root, 0);
     }
-    private int countDuplicate(Node node, Node last, int counter) {
-        if (node == null) return counter;
-        int c = countDuplicate(node.left, last, counter);
-        if (last != null && last.val == node.val) c++;
-        return countDuplicate(node.right, node, c);
+    private int countDuplicate(Node node, Node last, int c) {
+        if (node == null) return c;
+        int counter = countDuplicate(node.left, last, c);
+        if (node != last && last.val == node.val) counter++;
+        return countDuplicate(node.right, node, counter);
     }
     
     /**
@@ -284,7 +283,8 @@ public class BST {
     public static void main(String[] args) {
         System.out.println("Please run JUnit test");
         System.out.println("- 1st argument for getDepth");
-        int[] arr = {8, 3, 10, 6, 1, 4, 7, 14, 13, 11};
+        int[] arr = {8, 3, 10, 6, 1, 4, 2, 14, 13, 11};
+        // int[] arr = {5, 10, 3, 4, 8, 10, 2, 8, 3, 5, 8};
         BST bst = new BST();
         for (int x : arr) {
             bst.put(x);
@@ -293,5 +293,6 @@ public class BST {
             int k = Integer.parseInt(args[0]);
             System.out.println(Arrays.toString(bst.getDepth(k)));
         }
+        System.out.println("Duplicate entries count: " + bst.countDuplicate());
     }
 }
