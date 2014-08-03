@@ -1,6 +1,5 @@
 package com.nufts.algorithms.trees;
 
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
@@ -142,7 +141,7 @@ public class BST {
     /**
      * get least common ancester, assume x and y exist
      */
-    public int getLCA(int a, int b) throws IllegalArgumentException {
+    public int getLCA(int a, int b) {
         int x = a, y = b;
         if (!contains(x))
             throw new IllegalArgumentException("LCA arg " + x + " not in BST");
