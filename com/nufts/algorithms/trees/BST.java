@@ -169,16 +169,10 @@ public class BST {
         return countDuplicate(root, last, 0);
     }
     private int countDuplicate(Node node, Node last, int counter) {
-        if (node != null) {
-            int c = countDuplicate(node.left, last, counter);
-            if (last != null && last.val == node.val) {
-                System.out.println("found one: " + node.val);
-                c++;
-            }
-            c = countDuplicate(node.right, node, c);
-            return c;
-        }
-        return counter;
+        if (node == null) return counter;
+        int c = countDuplicate(node.left, last, counter);
+        if (last != null && last.val == node.val) c++;
+        return countDuplicate(node.right, node, c);
     }
     
     /**
