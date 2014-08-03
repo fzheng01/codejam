@@ -1,6 +1,9 @@
 package com.nufts.algorithms.trees;
 
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -58,6 +61,14 @@ public class BST {
         if (node.val == value) return node;
         else if (value < node.val) return get(node.left, value);
         else return get(node.right, value);
+    }
+    
+    /**
+     * contains (value)
+     */
+    public boolean contains(int value) {
+        Node node = get(value);
+        return node != null;
     }
     
     /**
@@ -129,6 +140,29 @@ public class BST {
     }
     
     /**
+     * get least common ancester, assume x and y exist
+     */
+    public int getLCA(int a, int b) throws IllegalArgumentException {
+        int x = a, y = b;
+        if (!contains(x))
+            throw new IllegalArgumentException("LCA arg " + x + " not in BST");
+        if (!contains(y))
+            throw new IllegalArgumentException("LCA arg " + y + " not in BST");
+        if (x == y) return x;
+        if (x > y) { int tmp = x; x = y; y = tmp; }
+        Node ret = getLCA(root, x, y);
+        if (ret == null)
+            throw new NullPointerException("getLCA return null");
+        else return ret.val;
+    }
+    private Node getLCA(Node node, int x, int y) {
+        if (node == null) return null;
+        if (node.val < x) return getLCA(node.right, x, y);
+        else if (node.val > y) return getLCA(node.left, x, y);
+        else return node;
+    }
+    
+    /**
      * support function, convert Integer List to int array
      */
     public static int[] listToArray(List<Integer> integers) {
@@ -194,10 +228,24 @@ public class BST {
         org.junit.Assert.assertTrue("bst.getDepth leaves are incorrect",
                                     Arrays.equals(actualArray, expectArray));
         
+        // test LCA
+        org.junit.Assert.assertEquals("LCA of 4 and 7 is 6", 6, bst.getLCA(4, 7));
+        org.junit.Assert.assertEquals("LCA of 11 and 14 is 14", 14, bst.getLCA(11, 14));
+        org.junit.Assert.assertEquals("LCA of 1 and 4 is 3", 3, bst.getLCA(1, 4));
+        org.junit.Assert.assertEquals("LCA of 7 and 11 is 8", 8, bst.getLCA(7, 11));
+        try {
+            bst.getLCA(2, 4);
+            fail("getLCA didn't throw exception while it is expected to");
+        } catch (IllegalArgumentException anException) {
+            org.junit.Assert.assertEquals("incorrent exception", "LCA arg 2 not in BST", anException.getMessage());
+        }
+        org.junit.Assert.assertEquals("LCA of 13 and 7 is 8", 8, bst.getLCA(13, 7));
+        org.junit.Assert.assertEquals("LCA of 13 and 10 is 10", 10, bst.getLCA(13, 10));
     }
     
     public static void main(String[] args) {
         System.out.println("Please run JUnit test");
+        System.out.println("- 1st argument for getDepth");
         int[] arr = {8, 3, 10, 6, 1, 4, 7, 14, 13, 11};
         BST bst = new BST();
         for (int x : arr) {
