@@ -60,6 +60,7 @@ public class FederalTax {
     }
 
     public static void main(String[] args) {
+        if(args.length < 1) throw new IllegalArgumentException("please input your 401k contribution");
         // =========== 2013 ===========
         float income = 91571f;
         float withheld = 16226.56f;
@@ -69,20 +70,26 @@ public class FederalTax {
         // =========== 2014 ===========
         income = 77404.18f - (10274.49f - 2946.81f);
         withheld = 13065.33f;
+
         // mid sep payment of fc
         income += 4174.13f - 83.59f - 10.58f - 1.57f - 41.66f - 250.45f;
         withheld += 668.21f;
+
         // last payment of fc
         income += .94f * 8 * 6.17f * 48.161186f;
         withheld += 500f;
+
         // ws payment till end of year
         float ws401k = Float.parseFloat(args[0]);
-        income += 7 * (4916.67f - 110.37f - 31.95f - 35f - ws401k * 4916.67f);
-        withheld += 7 * 700f;
+        float fsa = 41.66f;
+        float taxablePerPay = 4916.67f - 110.37f - 31.95f - fsa - 37.5f - ws401k * 4916.67f;
+        income += 7 * taxablePerPay;
+        withheld += 7 * 0.18f * taxablePerPay;
 //        income = 100366.74f;
 //        withheld = 18411.01f;
         taxPayer = new FederalTax(2014, income, withheld);
         taxPayer.addDeductible(5500); // IRA deductible
+
         System.out.printf("2014 Gross Income: %.2f, Taxable Income: %.2f, Tax Return: %.2f\n", income, taxPayer.grossIncome - taxPayer.deductible, taxPayer.run());
     }
 }
