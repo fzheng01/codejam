@@ -76,7 +76,7 @@ public class FederalTax {
         income += .94f * 8 * 6.17f * 48.161186f;
         withheld += 500f;
         // ws payment till end of year
-        float ws401k = 0.08f;
+        float ws401k = Float.parseFloat(args[0]);
         income += 7 * (4916.67f - 110.37f - 31.95f - 35f - ws401k * 4916.67f);
         withheld += 7 * 700f;
 //        income = 100366.74f;
