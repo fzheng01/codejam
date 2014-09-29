@@ -67,26 +67,24 @@ public class FederalTax {
         FederalTax taxPayer = new FederalTax(2013, income, withheld);
         taxPayer.addDeductible(5500); // IRA deductible
         System.out.printf("2013 Gross Income: %.2f, Taxable Income: %.2f, Tax Return: %.2f\n", income, taxPayer.grossIncome - taxPayer.deductible, taxPayer.run());
-        // =========== 2014 ===========
-        income = 77404.18f - (10274.49f - 2946.81f);
-        withheld = 13065.33f;
 
-        // mid sep payment of fc
-        income += 4174.13f - 83.59f - 10.58f - 1.57f - 41.66f - 250.45f;
-        withheld += 668.21f;
+        // =========== 2014 ===========
+        income = 78608.54f;
+        withheld = 14521.36f;
 
         // last payment of fc
+        // TODO
         income += .94f * 8 * 6.17f * 48.161186f;
         withheld += 500f;
 
-        // ws payment till end of year
+        // ws payment from Oct to till end of year
+        // TODO
         float ws401k = Float.parseFloat(args[0]);
-        float fsa = 41.66f;
-        float taxablePerPay = 4916.67f - 110.37f - 31.95f - fsa - 37.5f - ws401k * 4916.67f;
-        income += 7 * taxablePerPay;
-        withheld += 7 * 0.18f * taxablePerPay;
-//        income = 100366.74f;
-//        withheld = 18411.01f;
+        float fsa = 28.58f;
+        float taxablePerPay = 4916.66f - 110.37f - 31.95f - fsa - 37.5f - ws401k * 4916.66f;
+        income += 6 * taxablePerPay;
+        withheld += 6 * 0.166f * taxablePerPay;
+
         taxPayer = new FederalTax(2014, income, withheld);
         taxPayer.addDeductible(5500); // IRA deductible
 
