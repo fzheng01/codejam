@@ -69,13 +69,8 @@ public class FederalTax {
         System.out.printf("2013 Gross Income: %.2f, Taxable Income: %.2f, Tax Return: %.2f\n", income, taxPayer.grossIncome - taxPayer.deductible, taxPayer.run());
 
         // =========== 2014 ===========
-        income = 78608.54f;
-        withheld = 14521.36f;
-
-        // last payment of fc
-        // TODO
-        income += .94f * 8 * 6.17f * 48.161186f;
-        withheld += 500f;
+        income = 80867.01f;
+        withheld = 14807.61f;
 
         // ws payment from Oct to till end of year
         // TODO
