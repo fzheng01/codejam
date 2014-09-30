@@ -59,8 +59,25 @@ public class FederalTax {
         return withheld - (tax - childCredit);
     }
 
+    private static float run2014(float ws401k, boolean iraDeductible) {
+        float income = 80867.01f;
+        float withheld = 14807.61f;
+        float taxablePerPay = 4916.66f - 110.37f - 31.95f - 28.58f - 37.5f;
+        float totalIRA = 6 * ws401k * 4916.66f;
+        float wsIncome= 6 * taxablePerPay - totalIRA;
+        income += wsIncome;
+        // TODO, estimate
+        withheld += 0.166f * wsIncome;
+        FederalTax taxPayer = new FederalTax(2014, income, withheld);
+        if (iraDeductible) {
+            totalIRA += 5500f;
+            taxPayer.addDeductible(5500); // IRA deductible
+        }
+        System.out.printf("IRA: %.2f  ", totalIRA);
+        return taxPayer.run();
+    }
+
     public static void main(String[] args) {
-        if(args.length < 1) throw new IllegalArgumentException("please input your 401k contribution");
         // =========== 2013 ===========
         float income = 91571f;
         float withheld = 16226.56f;
@@ -68,21 +85,12 @@ public class FederalTax {
         taxPayer.addDeductible(5500); // IRA deductible
         System.out.printf("2013 Gross Income: %.2f, Taxable Income: %.2f, Tax Return: %.2f\n", income, taxPayer.grossIncome - taxPayer.deductible, taxPayer.run());
 
-        // =========== 2014 ===========
-        income = 80867.01f;
-        withheld = 14807.61f;
-
-        // ws payment from Oct to till end of year
-        // TODO
-        float ws401k = Float.parseFloat(args[0]);
-        float fsa = 28.58f;
-        float taxablePerPay = 4916.66f - 110.37f - 31.95f - fsa - 37.5f - ws401k * 4916.66f;
-        income += 6 * taxablePerPay;
-        withheld += 6 * 0.166f * taxablePerPay;
-
-        taxPayer = new FederalTax(2014, income, withheld);
-        taxPayer.addDeductible(5500); // IRA deductible
-
-        System.out.printf("2014 Gross Income: %.2f, Taxable Income: %.2f, Tax Return: %.2f\n", income, taxPayer.grossIncome - taxPayer.deductible, taxPayer.run());
+        for (float ws401k = 0f; ws401k <= 0.15f; ws401k = ws401k + 0.01f) {
+            System.out.printf("\t Return: %.2f\n", run2014(ws401k, false));
+        }
+        System.out.println("---------------------------------------------");
+        for (float ws401k = 0f; ws401k <= 0.15f; ws401k = ws401k + 0.01f) {
+            System.out.printf("\t Return: %.2f\n", run2014(ws401k, true));
+        }
     }
 }
