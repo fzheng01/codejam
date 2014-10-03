@@ -73,7 +73,7 @@ public class FederalTax {
             totalIRA += 5500f;
             taxPayer.addDeductible(5500); // IRA deductible
         }
-        System.out.printf("IRA: %.2f  ", totalIRA);
+        System.out.printf("Gross Income: $%.2f\tTaxable Income: $%.2f\tIRA: $%.2f  ", income, taxPayer.grossIncome - taxPayer.deductible, totalIRA);
         return taxPayer.run();
     }
 
@@ -83,14 +83,15 @@ public class FederalTax {
         float withheld = 16226.56f;
         FederalTax taxPayer = new FederalTax(2013, income, withheld);
         taxPayer.addDeductible(5500); // IRA deductible
-        System.out.printf("2013 Gross Income: %.2f, Taxable Income: %.2f, Tax Return: %.2f\n", income, taxPayer.grossIncome - taxPayer.deductible, taxPayer.run());
+        System.out.printf("2013 Gross Income: $%.2f, Taxable Income: $%.2f, Tax Return: $%.2f\n", income, taxPayer.grossIncome - taxPayer.deductible, taxPayer.run());
 
+        System.out.printf("2014\n");
         for (float ws401k = 0f; ws401k <= 0.15f; ws401k = ws401k + 0.01f) {
-            System.out.printf("\t Return: %.2f\n", run2014(ws401k, false));
+            System.out.printf("\tReturn: $%.2f\n", run2014(ws401k, false));
         }
         System.out.println("---------------------------------------------");
         for (float ws401k = 0f; ws401k <= 0.15f; ws401k = ws401k + 0.01f) {
-            System.out.printf("\t Return: %.2f\n", run2014(ws401k, true));
+            System.out.printf("\tReturn: $%.2f\n", run2014(ws401k, true));
         }
     }
 }
