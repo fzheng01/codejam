@@ -81,7 +81,7 @@ public class FederalTax {
     }
 
     private static float run2014(float ws401k, boolean iraDeductible) {
-        float income = 80867.01f;
+        float income = 80867.01f; // + 22534.25f;
         float withheld = 14807.61f;
         float taxablePerPay = 4916.66f - 110.37f - 31.95f - 28.58f - 37.5f;
         float totalIRA = 6 * ws401k * 4916.66f;
