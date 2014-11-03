@@ -85,10 +85,9 @@ public class FederalTax {
         float withheld = 14807.61f;
         float taxablePerPay = 4916.66f - 110.37f - 31.95f - 28.58f - 37.5f;
         float totalIRA = 6 * ws401k * 4916.66f;
-        float wsIncome= 6 * taxablePerPay - totalIRA;
+        float wsIncome= 6 * taxablePerPay - totalIRA + 75f;
         income += wsIncome;
-        // TODO, estimate
-        withheld += 0.166f * wsIncome;
+        withheld += 0.165f * wsIncome;
         float iraDeduction;
         iraDeduction = iraDeductible ? 5500f : 0f;
         totalIRA += iraDeduction;
