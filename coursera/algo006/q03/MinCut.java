@@ -26,27 +26,31 @@ class MinCut {
 	private void contract(int p, int q) {
 		int end = maxDim - 1;
 		for (int j = 0; j < maxDim; j++) {
-			board[p][j] += board[q][j];
+			if (j != p && j != q) {
+				board[p][j] += board[q][j];
+			}
 		}
 		for (int i = 0; i < maxDim; i++) {
-			board[i][p] += board[i][q];
-			if (q < end) {
-				board[i][q] = board[i][end];
+			if (i != p && i != q) {
+				board[i][p] += board[i][q];
 			}
 		}
 		if (q < end) {
-			for (int j = 0; j < maxDim; j++) {
-				board[q][j] = board[end][j];
+			for (int i = 0; i < maxDim; i++) {
+				board[i][q] = board[i][end];
+				board[q][i] = board[end][i];
 			}
 		}
-		board[p][p] = 0;
-		// System.out.println("p = " + p + "; q = " + q);
-		// for (int i = 0; i < end; i++) {
-		// 	for (int j = 0; j < end; j++) {
-		// 		System.out.print(board[i][j] + " ");
-		// 	}
-		// 	System.out.println();
-		// }
+		for (int i = 0; i < maxDim; i++) {
+			board[i][i] = 0;  // remove loop edge
+		}
+		System.out.println("p = " + p + "; q = " + q);
+		for (int i = 0; i < end; i++) {
+			for (int j = 0; j < end; j++) {
+				System.out.print(board[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
 
 	public int getMinCut() {
@@ -89,16 +93,13 @@ class MinCut {
 						}
 					}
 				}
-				long totalCnt = N*N*N*N;
+				long totalCnt = 1; //(long)(Math.log(N) / Math.log(2))*N*N;
 				long loopCnt = totalCnt;
 				while (loopCnt-- > 0) {
 					MinCut mt = new MinCut(input);
 					int curMt = mt.getMinCut();
 					if (curMt < mincut) mincut = curMt;
 					System.out.print((100-(100*loopCnt)/totalCnt) + "%\r");
-					if (mincut < 20) {
-						break;
-					}
 				}
 				System.out.println("MinCut is: " + mincut);
 			}
