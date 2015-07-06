@@ -18,6 +18,8 @@ tests
 *.jpeg
 *.bmp
 *.gif
+*-checkpoint.ipynb
+.ipynb_checkpoints/
 
 # Package Files #
 *.jar
