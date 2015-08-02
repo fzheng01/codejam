@@ -43,4 +43,4 @@ if __name__ == '__main__':
         if num < minNum:
             minNum = num
 
-    print "Result = " + str(minNum)
+    print("Result = " + str(minNum))
