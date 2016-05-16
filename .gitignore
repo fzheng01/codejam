@@ -18,6 +18,7 @@ tests
 *.jpeg
 *.bmp
 *.gif
+*.pyc
 *-checkpoint.ipynb
 .ipynb_checkpoints/
 
