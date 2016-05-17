@@ -1,10 +1,10 @@
 class LRUCache(object):
     """
-        @TODO
+        @todo: abc
     """
     class Item(object):
         """
-            @TODO
+            @todo: abc
         """
         def __init__(self, key, value):
             assert isinstance(key, int)
@@ -12,6 +12,8 @@ class LRUCache(object):
             assert value > 0
             self.__key = key
             self.__value = value
+            self.__pre = None
+            self.__next = None
 
         def getValue(self):
             return self.__value
@@ -27,12 +29,25 @@ class LRUCache(object):
 
     def get(self, key):
         """
-            @TODO
+            @todo: abc
         """
         pass
 
     def set(self, key, value):
         """
-            @TODO
+            @todo: abc
         """
         pass
+
+    def __remove(self, item):
+        """
+            @todo: abc
+        """
+        pass
+
+    def __add_header(self, item):
+        """
+            @todo: abc
+        """
+        pass
+
